@@ -18,66 +18,70 @@ import android.os.PowerManager.WakeLock;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class AndroidGame extends Activity implements Game{
+public class AndroidGame extends Activity implements Game {
 	AndroidFastRenderView renderView;
-    Graphics graphics;
-    Audio audio;
-    Input input;
-    FileIO fileIO;
-    Screen screen;
-    WakeLock wakeLock;
-    
-    @Override public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	Graphics graphics;
+	Audio audio;
+	Input input;
+	FileIO fileIO;
+	Screen screen;
+	WakeLock wakeLock;
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        boolean isPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
-        int frameBufferWidth = isPortrait ? 800: 1280;
-        int frameBufferHeight = isPortrait ? 1280: 800;
-        Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
-                frameBufferHeight, Config.RGB_565);
-        
-        
-        // TODO getWidth and getHeight for Display are deprecated.. look into this
-        float scaleX = (float) frameBufferWidth
-                / getWindowManager().getDefaultDisplay().getWidth();
-        float scaleY = (float) frameBufferHeight
-                / getWindowManager().getDefaultDisplay().getHeight();
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        renderView = new AndroidFastRenderView(this, frameBuffer);
-        graphics = new AndroidGraphics(getAssets(), frameBuffer);
-        fileIO = new AndroidFileIO(this);
-        audio = new AndroidAudio(this);
-        input = new AndroidInput(this, renderView, scaleX, scaleY);
-        screen = getInitScreen();
-        // TODO implement or override setContentView from somewhere
-        setContentView(renderView);
-        
-        PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        // TODO FULL_WAKE_LOCK is deprecated
-        wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyGame");
-    }
-    
-    @Override public void onPause(){
-        super.onPause();
-        wakeLock.release();
-        renderView.pause();
-        screen.pause();
+		boolean isPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+		int frameBufferWidth = isPortrait ? 800 : 1280;
+		int frameBufferHeight = isPortrait ? 1280 : 800;
+		Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
+				frameBufferHeight, Config.RGB_565);
 
-        if (isFinishing())
-            screen.dispose();
-    }
-    
-    @Override public void onResume() {
-    	super.onResume();
-    	wakeLock.acquire();
-    	screen.resume();
-    	renderView.resume();
+		// TODO getWidth and getHeight for Display are deprecated.. look into
+		// this
+		float scaleX = (float) frameBufferWidth
+				/ getWindowManager().getDefaultDisplay().getWidth();
+		float scaleY = (float) frameBufferHeight
+				/ getWindowManager().getDefaultDisplay().getHeight();
 
-    }
+		renderView = new AndroidFastRenderView(this, frameBuffer);
+		graphics = new AndroidGraphics(getAssets(), frameBuffer);
+		fileIO = new AndroidFileIO(this);
+		audio = new AndroidAudio(this);
+		input = new AndroidInput(this, renderView, scaleX, scaleY);
+		screen = getInitScreen();
+		// TODO implement or override setContentView from somewhere
+		setContentView(renderView);
+
+		PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		// TODO FULL_WAKE_LOCK is deprecated
+		wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK,
+				"MyGame");
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		wakeLock.release();
+		renderView.pause();
+		screen.pause();
+
+		if (isFinishing())
+			screen.dispose();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		wakeLock.acquire();
+		screen.resume();
+		renderView.resume();
+
+	}
 
 	@Override
 	public Audio getAudio() {
@@ -120,6 +124,5 @@ public class AndroidGame extends Activity implements Game{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 }
