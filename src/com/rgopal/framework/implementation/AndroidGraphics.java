@@ -1,11 +1,17 @@
 package com.rgopal.framework.implementation;
 
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 
 import com.rgopal.framework.Graphics;
 import com.rgopal.framework.Image;
 
 public class AndroidGraphics implements Graphics {
+
+	public AndroidGraphics(AssetManager assets, Bitmap frameBuffer) {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public Image newImage(String fileName, ImageFormat format) {

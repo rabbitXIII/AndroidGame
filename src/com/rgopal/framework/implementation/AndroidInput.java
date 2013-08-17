@@ -6,6 +6,11 @@ import com.rgopal.framework.Input;
 
 public class AndroidInput implements Input {
 
+	public AndroidInput(AndroidGame androidGame,
+			AndroidFastRenderView renderView, float scaleX, float scaleY) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public boolean isTouchDown(int pointer) {
 		// TODO Auto-generated method stub

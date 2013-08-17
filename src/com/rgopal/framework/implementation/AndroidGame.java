@@ -40,6 +40,8 @@ public class AndroidGame extends Activity implements Game{
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
                 frameBufferHeight, Config.RGB_565);
         
+        
+        // TODO getWidth and getHeight for Display are deprecated.. look into this
         float scaleX = (float) frameBufferWidth
                 / getWindowManager().getDefaultDisplay().getWidth();
         float scaleY = (float) frameBufferHeight
@@ -51,9 +53,11 @@ public class AndroidGame extends Activity implements Game{
         audio = new AndroidAudio(this);
         input = new AndroidInput(this, renderView, scaleX, scaleY);
         screen = getInitScreen();
+        // TODO implement or override setContentView from somewhere
         setContentView(renderView);
         
         PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        // TODO FULL_WAKE_LOCK is deprecated
         wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "MyGame");
     }
     
