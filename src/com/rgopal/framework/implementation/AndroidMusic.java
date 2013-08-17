@@ -1,10 +1,15 @@
 package com.rgopal.framework.implementation;
 
 import android.content.res.AssetFileDescriptor;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnPreparedListener;
+import android.media.MediaPlayer.OnSeekCompleteListener;
+import android.media.MediaPlayer.OnVideoSizeChangedListener;
 
 import com.rgopal.framework.Music;
 
-public class AndroidMusic implements Music {
+public class AndroidMusic implements Music, OnCompletionListener, OnSeekCompleteListener, OnPreparedListener, OnVideoSizeChangedListener{
 
 	public AndroidMusic(AssetFileDescriptor assetDescriptor) {
 		// TODO Auto-generated constructor stub
@@ -68,6 +73,30 @@ public class AndroidMusic implements Music {
 	public void seekBegin() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onPrepared(MediaPlayer mp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSeekComplete(MediaPlayer mp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCompletion(MediaPlayer mp) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
